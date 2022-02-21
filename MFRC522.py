@@ -21,7 +21,7 @@
 #    along with MFRC522-Python.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-import RPi.GPIO as GPIO
+import OPi.GPIO as GPIO
 import spi
 import signal
 import time
@@ -127,7 +127,7 @@ class MFRC522:
     
   serNum = []
   
-  def __init__(self, dev='/dev/spidev0.0', spd=1000000):
+  def __init__(self, dev='/dev/spidev1.0', spd=1000000):
     spi.openSPI(device=dev,speed=spd)
     GPIO.setmode(GPIO.BOARD)
     GPIO.setup(self.NRSTPD, GPIO.OUT)
