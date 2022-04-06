@@ -33,18 +33,18 @@ while continue_reading:
         print("{:02X}{:02X}{:02X}{:02X}".format(uid[0], uid[1], uid[2], uid[3]))
     
         # This is the default key for authentication
-        key = [0xFF,0xFF,0xFF,0xFF,0xFF,0xFF]
+        #key = [0xFF,0xFF,0xFF,0xFF,0xFF,0xFF]
         
         # Select the scanned tag
-        MIFAREReader.MFRC522_SelectTag(uid)
+        #MIFAREReader.MFRC522_SelectTag(uid)
 
         # Authenticate
-        status = MIFAREReader.MFRC522_Auth(MIFAREReader.PICC_AUTHENT1A, 8, key, uid)
+        #status = MIFAREReader.MFRC522_Auth(MIFAREReader.PICC_AUTHENT1A, 8, key, uid)
 
         # Check if authenticated
-        if status == MIFAREReader.MI_OK:
-            MIFAREReader.MFRC522_Read(8)
-            MIFAREReader.MFRC522_StopCrypto1()
+        #if status == MIFAREReader.MI_OK:
+        #    MIFAREReader.MFRC522_Read(8)
+        #    MIFAREReader.MFRC522_StopCrypto1()
         #else:
         #    print("Authentication error")
 
