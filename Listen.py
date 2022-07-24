@@ -33,9 +33,6 @@ while continue_reading:
     # If we have the UID, continue
     if status == MIFAREReader.MI_OK:
 
-        # Print UID
-        print("{:02X}{:02X}{:02X}{:02X}".format(uid[0], uid[1], uid[2], uid[3]))
-    
         # This is the default key for authentication
         key = [0x5c, 0xc7, 0x5d, 0xf8, 0x0c, 0x21]
         # Select the scanned tag
