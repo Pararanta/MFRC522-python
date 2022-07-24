@@ -45,11 +45,11 @@ while continue_reading:
         if status == MIFAREReader.MI_OK:
             UUID = uuid.uuid4().bytes
             Signature = list(signer.sign(SHA256.new(UUID)))
-            MIFAREReader.MFRC522_Write(0, list(UUID))
-            MIFAREReader.MFRC522_Write(1, Signature[0:16])
-            MIFAREReader.MFRC522_Write(2, Signature[16:32])
-            MIFAREReader.MFRC522_Write(5, Signature[32:48])
-            MIFAREReader.MFRC522_Write(6, Signature[48:64])
+            MIFAREReader.MFRC522_Write(4, list(UUID))
+            MIFAREReader.MFRC522_Write(5, Signature[0:16])
+            MIFAREReader.MFRC522_Write(6, Signature[16:32])
+            MIFAREReader.MFRC522_Write(9, Signature[32:48])
+            MIFAREReader.MFRC522_Write(10, Signature[48:64])
 
             for sector in range(16):
                 MIFAREReader.MFRC522_Write(sector*4 + 3, new_key + access_bits + new_key)
