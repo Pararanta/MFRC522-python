@@ -46,7 +46,7 @@ while continue_reading:
             UUID = MIFAREReader.MFRC522_Read(0);
             Signature = MIFAREReader.MFRC522_Read(1) + MIFAREReader.MFRC522_Read(2) + MIFAREReader.MFRC522_Read(5) + MIFAREReader.MFRC522_Read(6);
             try:
-                verifier.verify(SHA256.new(bytes(i1)), bytes(i2))
+                verifier.verify(SHA256.new(bytes(UUID)), bytes(Signature))
                 print('verified ' + ''.join(format(x, '02x') for x in UUID))
             except:
                 print('unverified ' + ''.join(format(x, '02x') for x in UUID))
