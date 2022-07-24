@@ -22,7 +22,7 @@ MIFAREReader = MFRC522.MFRC522()
 private_key = ECC.import_key(open('./keys/private_key.pem').read())
 signer = DSS.new(private_key, 'fips-186-3')
 # This loop keeps checking for chips. If one is near it will get the UID and authenticate
-key = [0xff]*6
+key = [0xff]*16
 new_key = [0x5c, 0xc7, 0x5d, 0xf8, 0x0c, 0x21]
 access_bits = [0x70, 0xf0, 0xf8, 0x00]
 while continue_reading:
