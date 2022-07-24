@@ -44,8 +44,8 @@ while continue_reading:
         # Check if authenticated
         if status == MIFAREReader.MI_OK:
             UUID = uuid.uuid4().bytes
-            Signature = list(signer.sign(SHA256.new(UUID)))
-            MIFAREReader.MFRC522_Write(4, list(UUID))
+            Signature = map(ord, list(signer.sign(SHA256.new(UUID))))
+            MIFAREReader.MFRC522_Write(4, map(ord, list(UUID)))
             MIFAREReader.MFRC522_Write(5, Signature[0:16])
             MIFAREReader.MFRC522_Write(6, Signature[16:32])
             MIFAREReader.MFRC522_Write(9, Signature[32:48])
