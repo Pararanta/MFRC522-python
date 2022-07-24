@@ -51,7 +51,7 @@ while continue_reading:
             MIFAREReader.MFRC522_Write(13, Signature[32:48])
             MIFAREReader.MFRC522_Write(14, Signature[48:64])
 
-            for sector in range(16):
+            for sector in range(2, 16):
                 MIFAREReader.MFRC522_Write(sector*4 + 3, new_key + access_bits + new_key)
             MIFAREReader.MFRC522_StopCrypto1()
             print('success')
