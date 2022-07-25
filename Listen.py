@@ -33,22 +33,6 @@ while continue_reading:
     # If we have the UID, continue
     if status == MIFAREReader.MI_OK:
 
-        # This is the default key for authentication
-        key = [0x5c, 0xc7, 0x5d, 0xf8, 0x0c, 0x21]
-        # Select the scanned tag
-        MIFAREReader.MFRC522_SelectTag(uid)
-
-        # Authenticate
-        status = MIFAREReader.MFRC522_Auth(MIFAREReader.PICC_AUTHENT1A, 8, key, uid)
-
-        # Check if authenticated
-        if status == MIFAREReader.MI_OK:
-            UUID = MIFAREReader.MFRC522_Read(0);
-            Signature = MIFAREReader.MFRC522_Read(1) + MIFAREReader.MFRC522_Read(2) + MIFAREReader.MFRC522_Read(5) + MIFAREReader.MFRC522_Read(6);
-            try:
-                verifier.verify(SHA256.new(bytes(UUID)), bytes(Signature))
-                print('verified ' + ''.join(format(x, '02x') for x in UUID))
-            except:
-                print('unverified ' + ''.join(format(x, '02x') for x in UUID))
-            MIFAREReader.MFRC522_StopCrypto1()
+        # Print UID
+        print("{:02X}{:02X}{:02X}{:02X}".format(uid[0], uid[1], uid[2], uid[3]))
 
