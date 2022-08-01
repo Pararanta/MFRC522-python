@@ -41,7 +41,7 @@ while continue_reading:
         data = map(ord, list(UUID)) + map(ord, list(signer.sign(SHA256.new(UUID))))
         order = [8, 9, 10, 13, 14]
         for i in range(5):
-            status = MIFAREReader.MFRC522_Auth(MIFAREReader.PICC_AUTHENT1A, i, key, uid)
+            status = MIFAREReader.MFRC522_Auth(MIFAREReader.PICC_AUTHENT1A, order[i], key, uid)
             if status == MIFAREReader.MI_OK:
                 MIFAREReader.MFRC522_Write(order[i], data[i:(i*16)])
 
