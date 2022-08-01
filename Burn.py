@@ -14,6 +14,9 @@ def end_read(signal,frame):
     continue_reading = False
     GPIO.cleanup()
 
+def toHex(number):
+    return "{:02X}".format(number)
+    
 # Hook the SIGINT
 signal.signal(signal.SIGINT, end_read)
 
@@ -49,5 +52,5 @@ while continue_reading:
         #    MIFAREReader.MFRC522_Write(sector*4 + 3, new_key + access_bits + new_key)
         
         MIFAREReader.MFRC522_StopCrypto1()
-        print('success')
-continue_reading = True
+        print("written " + "".join(map(toHex, uid + data[0:16])))
+        print("signed " + "".join(map(toHex, data[16:80])))
