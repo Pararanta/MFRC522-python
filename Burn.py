@@ -43,7 +43,7 @@ while continue_reading:
         for i in range(5):
             status = MIFAREReader.MFRC522_Auth(MIFAREReader.PICC_AUTHENT1A, order[i], key, uid)
             if status == MIFAREReader.MI_OK:
-                MIFAREReader.MFRC522_Write(order[i], data[i:(i*16)])
+                MIFAREReader.MFRC522_Write(order[i], data[(i*16):((i+1)*16)])
 
         #for sector in range(2, 16):
         #    MIFAREReader.MFRC522_Write(sector*4 + 3, new_key + access_bits + new_key)
