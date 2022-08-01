@@ -46,7 +46,7 @@ while continue_reading:
                 data = data + MIFAREReader.MFRC522_Read(i)
 
             try:
-                verifier.verify(SHA256.new(bytes(data[0:16])), bytes(data[17, 80]))
+                verifier.verify(SHA256.new(bytes(data[0:16])), bytes(data[17:80]))
                 print("verified " + "".join(map(toHex, uid + data[0:16])))
             except:
                 print("unverified " + "".join(map(toHex, uid + data[0:16])))
