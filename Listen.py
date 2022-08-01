@@ -25,8 +25,7 @@ MIFAREReader = MFRC522.MFRC522()
 public_key = ECC.import_key(open('./keys/public_key.pem').read())
 verifier = DSS.new(public_key, 'fips-186-3')
 key = [0xff, 0xff, 0xff, 0xff, 0xff, 0xff]
-# This loop keeps checking for chips. If one is near it will get the UID and aut
-henticate
+# This loop keeps checking for chips. If one is near it will get the UID and authenticate
 while continue_reading:
 
     # Scan for cards
