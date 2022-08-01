@@ -41,8 +41,8 @@ while continue_reading:
         # Select the scanned tag
         MIFAREReader.MFRC522_SelectTag(uid)
         UUID = uuid.uuid4().bytes
-        print(UUID)
-        print(signer.sign(SHA256.new(UUID)))
+        print(bytearray(UUID))
+        print(bytearray(signer.sign(SHA256.new(UUID))))
         data = map(ord, list(UUID)) + map(ord, list(signer.sign(SHA256.new(UUID))))
         order = [8, 9, 10, 13, 14]
         for i in range(5):
