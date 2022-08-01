@@ -45,10 +45,10 @@ while continue_reading:
             if status == MIFAREReader.MI_OK:
                 data = data + MIFAREReader.MFRC522_Read(i)
 
-            try:
-                verifier.verify(SHA256.new(bytes(data[0:16])), bytes(data[17:80]))
-                print("verified " + "".join(map(toHex, uid + data[0:16])))
-            except:
-                print("unverified " + "".join(map(toHex, uid + data[0:16])))
+        try:
+            verifier.verify(SHA256.new(bytes(data[0:16])), bytes(data[17:80]))
+            print("verified " + "".join(map(toHex, uid + data[0:16])))
+        except:
+            print("unverified " + "".join(map(toHex, uid + data[0:16])))
 
     MIFAREReader.MFRC522_StopCrypto1()
