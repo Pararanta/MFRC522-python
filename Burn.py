@@ -37,22 +37,17 @@ while continue_reading:
     if status == MIFAREReader.MI_OK:
         # Select the scanned tag
         MIFAREReader.MFRC522_SelectTag(uid)
+        UUID = uuid.uuid4().bytes
+        data = map(ord, list(UUID)) + map(ord, list(signer.sign(SHA256.new(UUID))))
+        order = [8, 9, 10, 13, 14]
+        for i in range(5):
+            status = MIFAREReader.MFRC522_Auth(MIFAREReader.PICC_AUTHENT1A, i, key, uid)
+            if status == MIFAREReader.MI_OK:
+                MIFAREReader.MFRC522_Write(order[i], data[i:(i*16)])
 
-        # Authenticate
-        status = MIFAREReader.MFRC522_Auth(MIFAREReader.PICC_AUTHENT1A, 8, key, uid)
-
-        # Check if authenticated
-        if status == MIFAREReader.MI_OK:
-            UUID = uuid.uuid4().bytes
-            Signature = map(ord, list(signer.sign(SHA256.new(UUID))))
-            MIFAREReader.MFRC522_Write(8, map(ord, list(UUID)))
-            MIFAREReader.MFRC522_Write(9, Signature[0:16])
-            MIFAREReader.MFRC522_Write(10, Signature[16:32])
-            MIFAREReader.MFRC522_Write(13, Signature[32:48])
-            MIFAREReader.MFRC522_Write(14, Signature[48:64])
-
-            for sector in range(2, 16):
-                MIFAREReader.MFRC522_Write(sector*4 + 3, new_key + access_bits + new_key)
-            MIFAREReader.MFRC522_StopCrypto1()
-            print('success')
+        #for sector in range(2, 16):
+        #    MIFAREReader.MFRC522_Write(sector*4 + 3, new_key + access_bits + new_key)
+        
+        MIFAREReader.MFRC522_StopCrypto1()
+        print('success')
 continue_reading = True
