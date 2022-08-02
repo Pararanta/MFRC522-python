@@ -44,9 +44,7 @@ while continue_reading:
             status = MIFAREReader.MFRC522_Auth(MIFAREReader.PICC_AUTHENT1A, i, key, uid)
             if status == MIFAREReader.MI_OK:
                 data = data + MIFAREReader.MFRC522_Read(i)
-
-        print(bytearray(data[0:16]))
-        print(bytearray(data[16:80]))
+                
         try:
             verifier.verify(SHA256.new(bytearray(data[0:16])), bytearray(data[16:80]))
             print("verified " + "".join(map(toHex, uid + data[0:16])))

@@ -5,6 +5,7 @@ import OPi.GPIO as GPIO
 import MFRC522
 import signal
 import uuid
+import time
 
 continue_reading = True
 
@@ -41,8 +42,6 @@ while continue_reading:
         # Select the scanned tag
         MIFAREReader.MFRC522_SelectTag(uid)
         UUID = uuid.uuid4().bytes
-        print(bytearray(UUID))
-        print(bytearray(signer.sign(SHA256.new(UUID))))
         data = map(ord, list(UUID)) + map(ord, list(signer.sign(SHA256.new(UUID))))
         order = [8, 9, 10, 13, 14]
         for i in range(5):
@@ -56,5 +55,5 @@ while continue_reading:
                 MIFAREReader.MFRC522_Write(sector*4 + 3, new_key + access_bits + new_key)
         
         MIFAREReader.MFRC522_StopCrypto1()
-        print("written " + "".join(map(toHex, uid + data[0:16])))
-        print("signed " + "".join(map(toHex, data[16:80])))
+        print("DONE " + "".join(map(toHex, uid + data[0:16])))
+        time.sleep(4)
