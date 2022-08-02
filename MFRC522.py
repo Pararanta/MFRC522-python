@@ -307,7 +307,7 @@ class MFRC522:
     (status, backData, backLen) = self.MFRC522_ToCard(self.PCD_TRANSCEIVE, buf)
     
     if (status == self.MI_OK) and (backLen == 0x18):
-      print("Size: {}".format(backData[0]))
+      #print("Size: {}".format(backData[0]))
       return    backData[0]
     else:
       return 0
@@ -338,9 +338,9 @@ class MFRC522:
 
     # Check if an error occurred
     if not(status == self.MI_OK):
-      print("AUTH ERROR!!")
-    if not (self.Read_MFRC522(self.Status2Reg) & 0x08) != 0:
-      print("AUTH ERROR(status2reg & 0x08) != 0")
+      print("ERROR")
+    #if not (self.Read_MFRC522(self.Status2Reg) & 0x08) != 0:
+    #  print("AUTH ERROR(status2reg & 0x08) != 0")
 
     # Return the status
     return status
@@ -357,9 +357,7 @@ class MFRC522:
     recvData.append(pOut[1])
     (status, backData, backLen) = self.MFRC522_ToCard(self.PCD_TRANSCEIVE, recvData)
     if not(status == self.MI_OK):
-      print "Error while reading!"
-    if len(backData) == 16:
-      print "Sector "+str(blockAddr)+" "+str(backData)
+      print "ERROR"
     if not(status == self.MI_OK):
       return [0x00]*16
     if len(backData) == 16:
@@ -389,9 +387,9 @@ class MFRC522:
         buf.append(crc[1])
         (status, backData, backLen) = self.MFRC522_ToCard(self.PCD_TRANSCEIVE,buf)
         if not(status == self.MI_OK) or not(backLen == 4) or not((backData[0] & 0x0F) == 0x0A):
-            print("Error while writing")
+            print("ERROR")
         if status == self.MI_OK:
-            print("Data written")
+            print("OK")
 
   def MFRC522_DumpClassic1K(self, key, uid):
     i = 0
