@@ -363,7 +363,7 @@ class MFRC522:
     if not(status == self.MI_OK):
       return [0x00]*16
     if len(backData) == 16:
-      return backData;
+      return backData
   
   def MFRC522_Write(self, blockAddr, writeData):
     buff = []
