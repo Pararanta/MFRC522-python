@@ -48,8 +48,9 @@ while continue_reading:
         try:
             verifier.verify(SHA256.new(bytearray(data[0:16])), bytearray(data[16:80]))
             print("VERIFIED " + "".join(map(toHex, uid + data[0:16])))
+            break
         except:
             print("UNVERIFIED " + "".join(map(toHex, uid + data[0:16])))
+            break
 
     MIFAREReader.MFRC522_StopCrypto1()
-    break
