@@ -46,8 +46,8 @@ if status == MIFAREReader.MI_OK:
                 
         try:
             verifier.verify(SHA256.new(bytearray(data[0:16])), bytearray(data[16:80]))
-            print("verified " + "".join(map(toHex, uid + data[0:16])))
+            print("VERIFIED " + "".join(map(toHex, uid + data[0:16])))
         except:
-            print("unverified " + "".join(map(toHex, uid + data[0:16])))
+            print("UNVERIFIED " + "".join(map(toHex, uid + data[0:16])))
 
 MIFAREReader.MFRC522_StopCrypto1()
