@@ -50,8 +50,10 @@ while continue_reading:
             if status == MIFAREReader.MI_OK:
                 MIFAREReader.MFRC522_Write(order[i], data[(i*16):((i+1)*16)])
 
-        #for sector in range(2, 16):
-        #    MIFAREReader.MFRC522_Write(sector*4 + 3, new_key + access_bits + new_key)
+        for sector in range(0, 16):
+            status = MIFAREReader.MFRC522_Auth(MIFAREReader.PICC_AUTHENT1A, sector*4 + 3, key, uid)
+            if status == MIFAREReader.MI_OK:
+                MIFAREReader.MFRC522_Write(sector*4 + 3, new_key + access_bits + new_key)
         
         MIFAREReader.MFRC522_StopCrypto1()
         print("written " + "".join(map(toHex, uid + data[0:16])))
