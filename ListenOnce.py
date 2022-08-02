@@ -26,15 +26,16 @@ public_key = ECC.import_key(open('./keys/public_key.pem').read())
 verifier = DSS.new(public_key, 'fips-186-3')
 key = [0x5c, 0xc7, 0x5d, 0xf8, 0x0c, 0x21]
 # This loop keeps checking for chips. If one is near it will get the UID and authenticate
+while continue_reading:
 
     # Scan for cards
-(status,TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
+    (status,TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
 
     # Get the UID of the card
-(status,uid) = MIFAREReader.MFRC522_Anticoll()
+    (status,uid) = MIFAREReader.MFRC522_Anticoll()
 
     # If we have the UID, continue
-if status == MIFAREReader.MI_OK:
+    if status == MIFAREReader.MI_OK:
         # Print UID
         data = []
         MIFAREReader.MFRC522_SelectTag(uid)
@@ -50,4 +51,5 @@ if status == MIFAREReader.MI_OK:
         except:
             print("UNVERIFIED " + "".join(map(toHex, uid + data[0:16])))
 
-MIFAREReader.MFRC522_StopCrypto1()
+    MIFAREReader.MFRC522_StopCrypto1()
+    break

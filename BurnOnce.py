@@ -29,15 +29,16 @@ signer = DSS.new(private_key, 'fips-186-3')
 key = [0xff]*6
 new_key = [0x5c, 0xc7, 0x5d, 0xf8, 0x0c, 0x21]
 access_bits = [0x07, 0x87, 0x8F, 0xFF]
+while continue_reading:
 
     # Scan for cards
-(status,TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
+    (status,TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
 
     # Get the UID of the card
-(status,uid) = MIFAREReader.MFRC522_Anticoll()
+    (status,uid) = MIFAREReader.MFRC522_Anticoll()
 
     # If we have the UID, continue
-if status == MIFAREReader.MI_OK:
+    if status == MIFAREReader.MI_OK:
         # Select the scanned tag
         MIFAREReader.MFRC522_SelectTag(uid)
         UUID = uuid.uuid4().bytes
@@ -55,3 +56,4 @@ if status == MIFAREReader.MI_OK:
         
         MIFAREReader.MFRC522_StopCrypto1()
         print("DONE " + "".join(map(toHex, uid + data[0:16])))
+        break
