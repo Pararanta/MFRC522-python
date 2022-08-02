@@ -27,7 +27,7 @@ signer = DSS.new(private_key, 'fips-186-3')
 # This loop keeps checking for chips. If one is near it will get the UID and authenticate
 key = [0xff]*6
 new_key = [0x5c, 0xc7, 0x5d, 0xf8, 0x0c, 0x21]
-access_bits = [0xFF, 0x07, 0x80, 0xFF]
+access_bits = [0x07, 0x87, 0x8F, 0xFF]
 while continue_reading:
 
     # Scan for cards
