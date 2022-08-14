@@ -27,30 +27,32 @@ verifier = DSS.new(public_key, 'fips-186-3')
 key = [0x5c, 0xc7, 0x5d, 0xf8, 0x0c, 0x21]
 # This loop keeps checking for chips. If one is near it will get the UID and authenticate
 while continue_reading:
+    try:
+        # Scan for cards
+        (status,TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
 
-    # Scan for cards
-    (status,TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
+        # Get the UID of the card
+        (status,uid) = MIFAREReader.MFRC522_Anticoll()
 
-    # Get the UID of the card
-    (status,uid) = MIFAREReader.MFRC522_Anticoll()
+        # If we have the UID, continue
+        if status == MIFAREReader.MI_OK:
+            # Print UID
+            data = []
+            MIFAREReader.MFRC522_SelectTag(uid)
+            for i in [8, 9, 10, 13, 14]:
 
-    # If we have the UID, continue
-    if status == MIFAREReader.MI_OK:
-        # Print UID
-        data = []
-        MIFAREReader.MFRC522_SelectTag(uid)
-        for i in [8, 9, 10, 13, 14]:
+                status = MIFAREReader.MFRC522_Auth(MIFAREReader.PICC_AUTHENT1A, i, key, uid)
+                if status == MIFAREReader.MI_OK:
+                    data = data + MIFAREReader.MFRC522_Read(i)
+                    
+            try:
+                verifier.verify(SHA256.new(bytearray(data[0:16])), bytearray(data[16:80]))
+                print("VERIFIED " + "".join(map(toHex, uid + data[0:16])))
+                break
+            except:
+                print("UNVERIFIED " + "".join(map(toHex, uid + data[0:16])))
+                break
 
-            status = MIFAREReader.MFRC522_Auth(MIFAREReader.PICC_AUTHENT1A, i, key, uid)
-            if status == MIFAREReader.MI_OK:
-                data = data + MIFAREReader.MFRC522_Read(i)
-                
-        try:
-            verifier.verify(SHA256.new(bytearray(data[0:16])), bytearray(data[16:80]))
-            print("VERIFIED " + "".join(map(toHex, uid + data[0:16])))
-            break
-        except:
-            print("UNVERIFIED " + "".join(map(toHex, uid + data[0:16])))
-            break
-
-    MIFAREReader.MFRC522_StopCrypto1()
+        MIFAREReader.MFRC522_StopCrypto1()
+    except:
+        print("ERROR")
