@@ -5,6 +5,7 @@ from Crypto.Signature import DSS
 import OPi.GPIO as GPIO
 import MFRC522
 import signal
+import time
 
 continue_reading = True
 
@@ -52,5 +53,6 @@ while continue_reading:
                 print("UNVERIFIED " + "".join(map(toHex, uid + data[0:16])))
 
         MIFAREReader.MFRC522_StopCrypto1()
+        time.sleep(1.0)
     except:
         print("ERROR")
