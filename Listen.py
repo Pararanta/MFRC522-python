@@ -53,6 +53,6 @@ while continue_reading:
                 print("UNVERIFIED " + "".join(map(toHex, uid + data[0:16])))
 
         MIFAREReader.MFRC522_StopCrypto1()
-        time.sleep(1.0)
+        time.sleep(0.5)
     except:
         print("ERROR")
